@@ -18,5 +18,3 @@ Grupa studencka: WEL18DE1S1
 opóźnienia zrealizowanego z użyciem pętli?
 
 - poprzez zmiane wartosci zmiennej i
-
-2.
