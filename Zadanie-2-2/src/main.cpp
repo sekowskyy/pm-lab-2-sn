@@ -1,41 +1,23 @@
 #include <Arduino.h>
-#include <avr/io.h>
-#define SOLUTION 0
-uint8_t button;
-bool state = true;
+volatile int state = LOW;
+void myISR();
 
-void togglePinD13(bool state) 
-{
-  PORTB = (state << 5);
-  state = !(state);
-}
-
-void delay() {
-  for (uint32_t j = 0x1FFFF; j > 0; j--)
-    asm volatile("nop");
-}
-
-int main() 
-{
-  DDRB &= !(1 << 0);
-  DDRB |= (1 << 5);
-  while (1)
-{
-#if (SOLUTION == 0)
-  button = (PINB & (1 << PINB0));
-  if (button == 0)
-  {
-    togglePinD13(&state);
-    delay();
+int main() {
+  init();
+  pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT);
+  attachInterrupt(0, myISR, CHANGE);
+  sei();
+  while (1) {
+    digitalWrite(13, HIGH);
+    delay(500);
+    digitalWrite(13, LOW);
+    delay(500);
   }
-  else
-    delay();
-#elif (SOLUTION == 1)
-  while (!(PINB & (1 << PINB0))){
-  togglePinD13(&state);
-  delay();
 }
-#endif
-}
+
+void myISR() {
+  state = !state;
+  digitalWrite(12, state);
 }
   
