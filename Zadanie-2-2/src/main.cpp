@@ -1,24 +1,24 @@
 #include <Arduino.h>
 #include <avr/io.h>
+#define LED_LENGTH 8
 
 int main()
 {
-  uint32_t i;
-
-  DDRB |= (1 << 5); //pinMode(13, OUTPUT);
+  DDRD |= 0xFF; 
   while (1)
-  {
-    PORTB |= (1 << 5); //digitalWrite(13, HIGH);
-    i = 0x3FFFF;
-    do
+  { 
+    for (uint8_t i = 0; i < LED_LENGTH; i++)  
     {
-      asm volatile("nop");
-    } while (i--);
-    PORTB &= !(1 << 5); // digitalWrite(13, LOW);
-    i = 0x3FFFF;
-    do
+      PORTD = (1 << i);
+      for (uint32_t j = 0x1FFFF; j > 0; j--)
+      {
+        __asm__ __volatile__("nop");
+      }
+    }
+    for (uint32_t j = 0x1FFFF; j > 0; j--)
     {
-      asm volatile("nop");
-    } while (i--);
+      __asm__ __volatile__("nop");
+    }
   }
 }
+  
