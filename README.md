@@ -17,5 +17,5 @@ Grupa studencka: WEL18DE1S1
  1.W jaki sposób można określić czas trwania
 opóźnienia zrealizowanego z użyciem pętli?
 
-- poprzez zmiane wartosci zmiennej i
+- Poprzez zmianę wartości zmiennej i.
 
